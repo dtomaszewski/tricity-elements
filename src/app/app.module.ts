@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { WrapperComponent } from './wrapper/wrapper.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent
+    WrapperComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [WrapperComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private injector: Injector) {
+    const tricityWrapper = createCustomElement(WrapperComponent, {injector});
+    customElements.define('tricity-wrapper', tricityWrapper);
+  }
+
+  ngDoBootstrap() {}
+}
